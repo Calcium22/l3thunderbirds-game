@@ -19,6 +19,8 @@ import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 public class Robot extends TimedRobot {
   private final PWMSparkMax m_leftDrive = new PWMSparkMax(0);
   private final PWMSparkMax m_rightDrive = new PWMSparkMax(1);
+  private final PWMSparkMax m_intake = new PWMSparkMax(2);
+  private final PWMSparkMax m_output = new PWMSparkMax(3);
   private final DifferentialDrive m_robotDrive =
       new DifferentialDrive(m_leftDrive::set, m_rightDrive::set);
   private final XboxController m_controller = new XboxController(0);
@@ -61,6 +63,21 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     m_robotDrive.arcadeDrive(-m_controller.getLeftY(), -m_controller.getRightX());
+
+    // Intake control
+    if (m_controller.getAButtonPressed()) {
+      m_intake.set(1.0); 
+    } else {
+      m_intake.set(0.0);
+    }
+    if (m_controller.getBButtonPressed()) {
+      m_intake.set(-1.0); 
+    } else {
+      m_intake.set(0.0);
+    }
+    if (m_controller.getRightTrigger() > 0) {
+      m_output.set(1.0);
+    }
   }
 
   /** This function is called once each time the robot enters test mode. */
