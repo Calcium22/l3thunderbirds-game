@@ -62,7 +62,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during teleoperated mode. */
   @Override
   public void teleopPeriodic() {
-    m_robotDrive.arcadeDrive(-m_controller.getLeftY(), -m_controller.getRightX());
+    m_robotDrive.arcadeDrive(-m_controller.getLeftY() * .5, -m_controller.getRightX() * .5);
 
     // Intake control
     if (m_controller.getAButtonPressed()) {
@@ -74,9 +74,6 @@ public class Robot extends TimedRobot {
       m_intake.set(-1.0); 
     } else {
       m_intake.set(0.0);
-    }
-    if (m_controller.getRightTrigger() > 0) {
-      m_output.set(1.0);
     }
   }
 
